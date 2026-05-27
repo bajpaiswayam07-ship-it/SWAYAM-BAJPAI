@@ -1,0 +1,31 @@
+{
+  "identity": {
+    "name": {
+      "value": "Swayam",
+      "updated": "2026-05-24"
+    },
+    "developer": {
+      "value": "Swayam Vajpayee",
+      "updated": "2026-05-24"
+    },
+    "developer_name": {
+      "value": "Swayam Vajpayee",
+      "updated": "2026-05-24"
+    }
+  },
+  "preferences": {
+    "preferred_greeting": {
+      "value": "जी वॉस",
+      "updated": "2026-05-24"
+    }
+  },
+  "projects": {},
+  "relationships": {
+    "developer": {
+      "value": "Swayam",
+      "updated": "2026-05-24"
+    }
+  },
+  "wishes": {},
+  "notes": {}
+}
