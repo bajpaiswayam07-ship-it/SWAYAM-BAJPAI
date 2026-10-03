@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack &amp; Circular Queue Interactive Visualizer Suite</title>
+    <meta name="description" content="An interactive, high-fidelity visualizer and learning lab for Stack (LIFO) and Circular Queue (Ring Buffer) data structures with real-world applications and multi-language code snippets.">
+    <meta name="keywords" content="Data Structures, Stack Visualizer, Circular Queue, Ring Buffer, LIFO, FIFO, Computer Science, C++, Java, Python">
+    <meta name="theme-color" content="#080d1a">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-wrapper">
+                <div class="brand-logo-icon" aria-hidden="true">&#9881;</div>
+                <div class="brand-title-wrap">
+                    <h1>StructLab : Stack &amp; Circular Queue</h1>
+                    <span class="brand-subtitle">Interactive Data Structure Engine &amp; Simulator</span>
+                </div>
+            </div>
+
+            <!-- Navigation Bar -->
+            <nav class="nav-tabs-wrapper" aria-label="Main Navigation">
+                <button class="nav-tab-btn active" id="nav-btn-stack" data-tab="stack" type="button">
+                    <span>&#129374;</span> Stack (LIFO)
+                </button>
+                <button class="nav-tab-btn" id="nav-btn-queue" data-tab="circularQueue" type="button">
+                    <span>&#128257;</span> Circular Queue (FIFO)
+                </button>
+                <button class="nav-tab-btn" id="nav-btn-apps" data-tab="apps" type="button">
+                    <span>&#9883;</span> Real-World Apps
+                </button>
+                <button class="nav-tab-btn" id="nav-btn-code" data-tab="code" type="button">
+                    <span>&#128187;</span> Code Explorer
+                </button>
+                <button class="nav-tab-btn" id="nav-btn-quiz" data-tab="quiz" type="button">
+                    <span>&#127919;</span> Quiz &amp; Challenge
+                </button>
+            </nav>
+
+            <div class="header-actions">
+                <button class="btn-dev-badge" id="btn-dev-hacker" type="button" title="Lead Developer & Architect: SWAYAM BAJPAI (Click for Cyber Sound FX)">
+                    <span class="hacker-glitch">&#9889;</span> DEV: <strong>SWAYAM BAJPAI</strong>
+                </button>
+                <button class="btn-utility" id="btn-sound-toggle" type="button" title="Toggle Sound Feedback">
+                    &#128266; Sound: ON
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+
+        <!-- ========================================== -->
+        <!-- SECTION 1: STACK VISUALIZER (LIFO)         -->
+        <!-- ========================================== -->
+        <section class="app-section active" id="section-stack" aria-labelledby="heading-stack">
+            <!-- Hero Banner -->
+            <div class="section-hero-banner banner-stack">
+                <div class="hero-info">
+                    <h2 id="heading-stack">
+                        <span>Stack Visualizer</span>
+                        <span class="principle-tag">LIFO : Last In, First Out</span>
+                    </h2>
+                    <p>Elements are pushed and popped strictly from one end called the <strong>TOP</strong>. Visualizes array-backed contiguous memory allocation, pointer shifts, and boundary checks (Overflow &amp; Underflow).</p>
+                </div>
+                <div class="hero-stats-wrap">
+                    <div class="stat-chip">
+                        <span class="stat-label">Capacity</span>
+                        <span class="stat-val" id="stack-capacity-display">0 / 6</span>
+                    </div>
+                    <div class="stat-chip">
+                        <span class="stat-label">Top Element</span>
+                        <span class="stat-val" id="stack-top-val-display">NULL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Operations Toolbar -->
+            <div class="interactive-toolbar">
+                <div class="input-action-cluster">
+                    <div class="input-styled-wrap">
+                        <input type="text" id="stack-val-input" class="input-styled" placeholder="Value (e.g. 42)" maxlength="8" autocomplete="off" aria-label="Value to push to stack">
+                    </div>
+                    <button class="btn-action btn-cyan" id="btn-stack-push" type="button" title="Push item onto stack [Enter]">
+                        <span>&darr;</span> Push
+                    </button>
+                    <button class="btn-action btn-rose" id="btn-stack-pop" type="button" title="Pop top item [Delete]">
+                        <span>&uarr;</span> Pop
+                    </button>
+                    <button class="btn-action btn-ghost" id="btn-stack-peek" type="button" title="Inspect top item without removing">
+                        <span>&#128065;</span> Peek (Top)
+                    </button>
+                    <button class="btn-action btn-ghost" id="btn-stack-random" type="button" title="Fill with random numbers">
+                        <span>&#127922;</span> Randomize
+                    </button>
+                    <button class="btn-action btn-ghost" id="btn-stack-clear" type="button" title="Clear all stack elements">
+                        <span>&#128465;</span> Clear
+                    </button>
+                </div>
+
+                <div class="input-action-cluster">
+                    <label for="stack-cap-select" class="hud-label">Capacity:</label>
+                    <select id="stack-cap-select" class="select-styled" aria-label="Stack Capacity">
+                        <option value="4">4 Slots</option>
+                        <option value="5">5 Slots</option>
+                        <option value="6" selected>6 Slots</option>
+                        <option value="8">8 Slots</option>
+                        <option value="10">10 Slots</option>
+                    </select>
+                    <span id="stack-status-badge" class="status-tag tag-empty">EMPTY (top = -1)</span>
+                </div>
+            </div>
+
+            <!-- Dual Grid: 3D Stack Stage + Complexity/Theory Panel -->
+            <div class="visualizer-dual-grid">
+                <!-- Stack Stage -->
+                <div class="stage-card">
+                    <div class="stage-head">
+                        <h3>Memory Array Container (LIFO)</h3>
+                        <div id="stack-top-pointer"></div>
+                    </div>
+
+                    <!-- Open top 3D Stack Frame -->
+                    <div class="stack-visual-frame" id="stack-visual-frame">
+                        <div id="stack-elements-container">
+                            <!-- Dynamic stack slots rendered by js/stack.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theory & Operation Complexity Cards -->
+                <div class="info-cards-stack">
+                    <div class="card-feature">
+                        <h4>&#9889; Algorithmic Time &amp; Space Complexity</h4>
+                        <table class="complexity-table">
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>Time</th>
+                                    <th>Space</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Push(x)</td>
+                                    <td class="o1">O(1)</td>
+                                    <td class="o1">O(1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Pop()</td>
+                                    <td class="o1">O(1)</td>
+                                    <td class="o1">O(1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Peek() / Top()</td>
+                                    <td class="o1">O(1)</td>
+                                    <td class="o1">O(1)</td>
+                                </tr>
+                                <tr>
+                                    <td>IsEmpty() / IsFull()</td>
+                                    <td class="o1">O(1)</td>
+                                    <td class="o1">O(1)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-feature">
+                        <h4>&#128218; Core Stack Mechanics</h4>
+                        <ul>
+                            <li><strong>Top Pointer:</strong> Starts at <code>-1</code> when empty. Increments on <code>push()</code> and decrements on <code>pop()</code>.</li>
+                            <li><strong>Overflow Condition:</strong> Occurs when attempting to push onto a full stack: <code>top == capacity - 1</code>.</li>
+                            <li><strong>Underflow Condition:</strong> Occurs when attempting to pop from an empty stack: <code>top == -1</code>.</li>
+                            <li><strong>Contiguous Memory:</strong> Elements sit in successive memory addresses (4 bytes each).</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-feature">
+                        <h4>&#127760; Real-World Uses</h4>
+                        <p>Function call stack recursion, browser Back/Forward history, undo/redo mechanisms in text editors, and syntax bracket parsing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SECTION 2: CIRCULAR QUEUE (FIFO RING)      -->
+        <!-- ========================================== -->
+        <section class="app-section" id="section-circularQueue" aria-labelledby="heading-queue">
+            <!-- Hero Banner -->
+            <div class="section-hero-banner banner-queue">
+                <div class="hero-info">
+                    <h2 id="heading-queue">
+                        <span>Circular Queue Visualizer</span>
+                        <span class="principle-tag green">FIFO : First In, First Out (Ring Buffer)</span>
+                    </h2>
+                    <p>Solves standard linear queue memory wastage! Instead of shifting elements, both <strong>FRONT</strong> and <strong>REAR</strong> pointers wrap around to index 0 using the modulo operator <code>% capacity</code>.</p>
+                </div>
+                <div class="hero-stats-wrap">
+                    <div id="cq-front-rear-display" class="hero-stats-wrap">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations Toolbar -->
+            <div class="interactive-toolbar">
+                <div class="input-action-cluster">
+                    <div class="input-styled-wrap">
+                        <input type="text" id="cq-val-input" class="input-styled" placeholder="Value (e.g. A1)" maxlength="6" autocomplete="off" aria-label="Value to enqueue">
+                    </div>
+                    <button class="btn-action btn-emerald" id="btn-cq-enqueue" type="button" title="Enqueue value at REAR [Enter]">
+                        <span>&oplus;</span> Enqueue (Rear)
+                    </button>
+                    <button class="btn-action btn-rose" id="btn-cq-dequeue" type="button" title="Dequeue value from FRONT [Delete]">
+                        <span>&ominus;</span> Dequeue (Front)
+                    </button>
+                    <button class="btn-action btn-ghost" id="btn-cq-front" type="button" title="Peek front item">
+                        <span>&#128065;</span> Peek Front
+                    </button>
+                    <button class="btn-action btn-ghost" id="btn-cq-rear" type="button" title="Peek rear item">
+                        <span>&#128065;</span> Peek Rear
+                    </button>
+                    <button class="btn-action btn-purple" id="btn-cq-wrap-demo" type="button" title="Run automated wrap-around showcase">
+                        <span>&#10024;</span> Auto-Wrap Demo
+                    </button>
+                    <button class="btn-action btn-ghost" id="btn-cq-clear" type="button" title="Reset circular queue">
+                        <span>&#128465;</span> Clear
+                    </button>
+                </div>
+
+                <div class="input-action-cluster">
+                    <label for="cq-cap-select" class="hud-label">Ring Size:</label>
+                    <select id="cq-cap-select" class="select-styled" aria-label="Circular Queue Capacity">
+                        <option value="5">5 Slots</option>
+                        <option value="6" selected>6 Slots</option>
+                        <option value="8">8 Slots</option>
+                    </select>
+                    <span id="cq-status-badge" class="status-tag tag-empty">EMPTY (F: -1, R: -1)</span>
+                </div>
+            </div>
+
+            <!-- Dual Views: Circular Radial SVG + Linear Array Projection -->
+            <div class="cq-stage-grid" id="cq-visual-stage">
+                <!-- Radial Ring Card -->
+                <div class="cq-radial-card">
+                    <div class="stage-head" style="width: 100%;">
+                        <h3>Radial Ring Geometry (Modulo Buffer)</h3>
+                        <span class="pointer-pill pill-front">FRONT (Dequeue)</span>
+                        <span class="pointer-pill pill-rear">REAR (Enqueue)</span>
+                    </div>
+
+                    <div class="cq-svg-container">
+                        <svg id="cq-svg-ring" width="380" height="380" viewBox="0 0 380 380" aria-label="Circular Queue Ring SVG Visualizer">
+                            <!-- Dynamically generated SVG elements -->
+                        </svg>
+                    </div>
+
+                    <!-- Modulo Formula HUD -->
+                    <div class="cq-formula-card" id="cq-formula-hud" style="width: 100%;">
+                        <!-- Dynamic calculations rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Linear Array Equivalent + Theory -->
+                <div class="info-cards-stack">
+                    <div class="stage-card">
+                        <div class="stage-head">
+                            <h3>Linear Memory Array Projection</h3>
+                            <span class="slot-address">Direct Memory Representation</span>
+                        </div>
+                        <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+                            See how slots freed at the beginning are re-occupied when rear wraps around to index 0:
+                        </p>
+                        <div class="cq-linear-row" id="cq-linear-container">
+                            <!-- Rendered by circularQueue.js -->
+                        </div>
+                    </div>
+
+                    <div class="card-feature">
+                        <h4>&#129518; The Mathematical Formulas</h4>
+                        <ul>
+                            <li><strong>Enqueue Formula:</strong> <code>rear = (rear + 1) % capacity</code></li>
+                            <li><strong>Dequeue Formula:</strong> <code>front = (front + 1) % capacity</code></li>
+                            <li><strong>Queue Full Condition:</strong> <code>(rear + 1) % capacity == front</code> (or tracking count == capacity)</li>
+                            <li><strong>Queue Empty Condition:</strong> <code>front == -1</code> (or count == 0)</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-feature">
+                        <h4>&#9889; Performance Advantages</h4>
+                        <table class="complexity-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Standard Queue</th>
+                                    <th>Circular Queue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Enqueue Time</td>
+                                    <td class="o1">O(1)</td>
+                                    <td class="o1">O(1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Dequeue Time</td>
+                                    <td>O(1) / O(N) shift</td>
+                                    <td class="o1">O(1) constant</td>
+                                </tr>
+                                <tr>
+                                    <td>Space Utilization</td>
+                                    <td style="color: #f43f5e;">Memory Wasted</td>
+                                    <td class="o1">100% Reusable</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SECTION 3: REAL-WORLD APPLICATIONS         -->
+        <!-- ========================================== -->
+        <section class="app-section" id="section-apps" aria-labelledby="heading-apps">
+            <!-- Hero Banner -->
+            <div class="section-hero-banner banner-apps">
+                <div class="hero-info">
+                    <h2 id="heading-apps">
+                        <span>Real-World Applications Arena</span>
+                        <span class="principle-tag" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #f59e0b;">Applied Computer Science</span>
+                    </h2>
+                    <p>Witness Stack and Circular Queue in action solving actual industry problems: syntax parsing in compilers and CPU scheduling in Operating Systems.</p>
+                </div>
+            </div>
+
+            <div class="apps-dual-layout">
+                <!-- App 1: Balanced Parentheses (Stack) -->
+                <article class="app-card">
+                    <h3><span>&#129520;</span> Balanced Parentheses Checker (Compiler Parsing)</h3>
+                    <p class="app-desc">Compilers like GCC, Clang, and V8 use a Stack to verify paired matching brackets <code>() {} []</code>.</p>
+
+                    <div class="paren-controls">
+                        <input type="text" id="paren-input" class="paren-input" value="{[a + (b * c)] - d}" placeholder="Expression with () {} []" aria-label="Parentheses Expression">
+                        <button class="btn-action btn-cyan" id="btn-paren-run" type="button">
+                            Run Evaluation
+                        </button>
+                        <button class="btn-action btn-ghost" id="btn-paren-clear" type="button">
+                            Clear
+                        </button>
+                    </div>
+
+                    <div class="paren-presets">
+                        <span class="hud-label">Presets:</span>
+                        <button class="paren-preset-btn" data-expr="{[()]}">{[()]}</button>
+                        <button class="paren-preset-btn" data-expr="((a+b)*[c-d])">((a+b)*[c-d])</button>
+                        <button class="paren-preset-btn" data-expr="[({)]}">[({)]} (Mismatch)</button>
+                        <button class="paren-preset-btn" data-expr="((()))">((()))</button>
+                        <button class="paren-preset-btn" data-expr="([{}])(">([{}])( (Incomplete)</button>
+                    </div>
+
+                    <div id="paren-result-banner" class="result-banner idle">
+                        Enter an expression with brackets <code>() {} []</code> and click "Run Evaluation".
+                    </div>
+
+                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Step-by-Step Execution Ticker:</h4>
+                    <div class="step-log-box" id="paren-steps-log">
+                        <div class="step-log-item step-skip">Awaiting expression evaluation...</div>
+                    </div>
+                </article>
+
+                <!-- App 2: Round Robin CPU Scheduling (Circular Queue) -->
+                <article class="app-card">
+                    <h3><span>&#9881;</span> CPU Round-Robin Task Scheduler (Operating Systems)</h3>
+                    <p class="app-desc">Operating Systems (Linux/Windows) schedule preemptive processes in time slices (Quantum) using a Circular Ready Queue.</p>
+
+                    <div class="rr-controls-row">
+                        <div>
+                            <span class="hud-label">Time Quantum:</span>
+                            <strong style="color: var(--accent-cyan); font-family: var(--font-mono); margin-left: 4px;"><span id="rr-quantum-val">2</span> units</strong>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-action btn-emerald" id="btn-rr-start" type="button">Start Scheduler</button>
+                            <button class="btn-action btn-rose" id="btn-rr-pause" type="button">Pause</button>
+                            <button class="btn-action btn-ghost" id="btn-rr-reset" type="button">Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="rr-cpu-stage">
+                        <div id="rr-active-task">
+                            <!-- Populated dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Circular Ready Queue (Waiting Tasks):</h4>
+                    <div class="rr-tasks-queue" id="rr-tasks-container">
+                        <!-- Tasks rendered by JS -->
+                    </div>
+
+                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Completed Processes:</h4>
+                    <div class="completed-tasks-row" id="rr-completed-container">
+                        <div class="empty-completed-msg">No tasks completed yet</div>
+                    </div>
+
+                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin: 0.8rem 0 0.5rem; text-transform: uppercase;">Scheduler Event Log:</h4>
+                    <div class="timeline-box" id="rr-timeline-log">
+                        <div class="timeline-entry info">Scheduler ready. Click "Start Scheduler" to execute.</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SECTION 4: CODE & COMPLEXITY EXPLORER      -->
+        <!-- ========================================== -->
+        <section class="app-section" id="section-code" aria-labelledby="heading-code">
+            <div class="section-hero-banner" style="background: rgba(18, 26, 48, 0.8);">
+                <div class="hero-info">
+                    <h2 id="heading-code">
+                        <span>Code &amp; Algorithm Explorer</span>
+                        <span class="principle-tag">Clean Industry Implementations</span>
+                    </h2>
+                    <p>Review production-grade implementations of Stack and Circular Queue in <strong>C++</strong>, <strong>Java</strong>, <strong>Python</strong>, and <strong>JavaScript</strong>.</p>
+                </div>
+            </div>
+
+            <div class="code-layout-card">
+                <div class="code-selector-bar">
+                    <div class="ds-selector-group">
+                        <button class="ds-code-pill active" data-ds="stack" type="button">&#129374; Stack Class</button>
+                        <button class="ds-code-pill" data-ds="circularQueue" type="button">&#128257; Circular Queue Class</button>
+                    </div>
+
+                    <div class="lang-selector-group">
+                        <button class="lang-pill-btn active" data-lang="cpp" type="button">C++</button>
+                        <button class="lang-pill-btn" data-lang="java" type="button">Java</button>
+                        <button class="lang-pill-btn" data-lang="python" type="button">Python</button>
+                        <button class="lang-pill-btn" data-lang="js" type="button">JavaScript</button>
+                        <button class="btn-utility" id="btn-copy-code" type="button">&#128203; Copy Code</button>
+                    </div>
+                </div>
+
+                <div class="code-editor-box">
+                    <pre><code id="code-display-block">
+                        <!-- Code injected dynamically with syntax highlighting -->
+                    </code></pre>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- SECTION 5: QUIZ & CONCEPT MASTERY          -->
+        <!-- ========================================== -->
+        <section class="app-section" id="section-quiz" aria-labelledby="heading-quiz">
+            <div class="section-hero-banner" style="background: rgba(18, 26, 48, 0.8);">
+                <div class="hero-info">
+                    <h2 id="heading-quiz">
+                        <span>Concept Mastery Challenge</span>
+                        <span class="principle-tag" style="background: rgba(157, 78, 221, 0.15); border-color: rgba(157, 78, 221, 0.4); color: #d8b4fe;">Interactive Quiz</span>
+                    </h2>
+                    <p>Test your understanding of LIFO, FIFO, Modulo arithmetic, Overflow/Underflow rules, and Time Complexity.</p>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div id="quiz-question-box">
+                    <!-- Injected by app.js -->
+                </div>
+
+                <div id="quiz-score-card" style="display:none;">
+                    <!-- Rendered when quiz completes -->
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.5rem;">
+                    <button class="btn-action btn-ghost" id="btn-quiz-reset" type="button">Restart Quiz</button>
+                    <button class="btn-action btn-cyan" id="btn-quiz-next" type="button" style="display:none;">Next Question &rarr;</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- LIVE ACTIVITY CONSOLE / TERMINAL           -->
+        <!-- ========================================== -->
+        <div class="activity-terminal-card" aria-label="System Activity Terminal">
+            <div class="terminal-header">
+                <div class="terminal-title-wrap">
+                    <div class="terminal-dots">
+                        <span class="term-dot dot-red"></span>
+                        <span class="term-dot dot-yellow"></span>
+                        <span class="term-dot dot-green"></span>
+                    </div>
+                    <span class="term-heading">ACTIVITY TICKER &amp; DEBUG TERMINAL</span>
+                </div>
+                <button class="btn-utility" id="btn-clear-logs" type="button" style="font-size: 0.72rem; padding: 2px 8px;">Clear Log</button>
+            </div>
+            <div class="terminal-body" id="activity-terminal-body">
+                <!-- Live logs injected here -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/codeSnippets.js"></script>
+    <script src="js/stack.js"></script>
+    <script src="js/circularQueue.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
