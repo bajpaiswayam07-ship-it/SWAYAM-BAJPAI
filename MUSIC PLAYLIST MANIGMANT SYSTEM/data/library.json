@@ -1,0 +1,42 @@
+{
+  "nextSongId": 14,
+  "songs": [
+    {
+      "id": 11,
+      "title": "295 - Sidhu Moose Wala",
+      "artist": "Sidhu Moose Wala",
+      "album": "Moosetape",
+      "genre": "Punjabi",
+      "duration": 270,
+      "bpm": 120,
+      "playCount": 3,
+      "filePath": "C:/Users/Swayam/Downloads/295 - Sidhu Moose Wala.mp3"
+    },
+    {
+      "id": 12,
+      "title": "Casa Tupka Anthemo Yo Yo Honey Singh 128 Kbps",
+      "artist": "Unknown Artist",
+      "album": "Singles",
+      "genre": "Punjabi",
+      "duration": 210,
+      "bpm": 120,
+      "playCount": 5,
+      "filePath": "C:/Users/Swayam/Downloads/Casa Tupka Anthemo Yo Yo Honey Singh 128 Kbps.mp3"
+    },
+    {
+      "id": 13,
+      "title": "Casa Tupka Anthemo Yo Yo Honey Singh 128 Kbps",
+      "artist": "Unknown Artist",
+      "album": "Singles",
+      "genre": "Punjabi",
+      "duration": 210,
+      "bpm": 120,
+      "playCount": 0,
+      "filePath": "C:/Users/Swayam/Downloads/Casa Tupka Anthemo Yo Yo Honey Singh 128 Kbps.mp3"
+    }
+  ],
+  "playlists": {
+    "Favorites": [11, 12],
+    "All Songs": [12, 11]
+  }
+}

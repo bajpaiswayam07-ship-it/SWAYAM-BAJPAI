@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "username": "adminswayam",
+      "email": "adminswayam@gmail.com",
+      "password": "admin@123",
+      "role": "admin",
+      "display_name": "System Admin",
+      "displayName": "System Admin"
+    },
+    {
+      "username": "sffd",
+      "email": "bajpaiswayam07@gmail.com",
+      "password": "bajpai@123",
+      "role": "user",
+      "display_name": "adsf",
+      "displayName": "adsf"
+    }
+  ]
+}
